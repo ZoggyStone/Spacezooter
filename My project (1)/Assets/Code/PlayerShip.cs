@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerShip : Ship
+{
+    void Start()
+    {
+        // No need to do anything in Start as of now.
+    }
+
+    private void HandleInput()
+    {
+        if (Input.GetMouseButton(1) || Input.GetKey(KeyCode.W))
+        {
+            Thrust();
+        }
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        {
+            FireProjectile();
+        }
+    }
+
+    private void FollowMouse()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+        Vector2 directionToFace = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
+        transform.up = directionToFace;
+    }
+
+    private void Update()
+    {
+        HandleInput();
+        FollowMouse();
+    }
+}
